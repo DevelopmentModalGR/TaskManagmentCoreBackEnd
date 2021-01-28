@@ -15,8 +15,10 @@ namespace TaskManagementAspCore.Controllers
     [Route("users")]
     public class UserController : Controller
     {
+        #region GETTERS
+
         /*
-        //GETTERS
+        //RETORNA TODOS USUARIOS
         */
         [HttpGet]
         [Route("")]
@@ -33,10 +35,13 @@ namespace TaskManagementAspCore.Controllers
             return users;
         }
 
+        /*
+       //RETORNA TODOS USUARIOS, INCLUINDO NOME DE COMPANIAS, DEPARTAMENTOS E JOBS
+       */
         [HttpGet]
-        [Route("Completeinfo")]
+        [Route("allinfo")]
         //[Authorize(Roles = "manager")]
-        public async Task<ActionResult<List<User>>> GetUsersWithCompleteInfo(
+        public async Task<ActionResult<List<User>>> GetUsersAllInfo(
            [FromServices] DataContext context,
            [FromBody] User model)
         {
@@ -50,7 +55,9 @@ namespace TaskManagementAspCore.Controllers
             return users;
         }
 
-
+        /*
+        //RETORNA O USUARIO PELO ID PASSADO COMO PARAMETRO COM TODAS AS INFORMAÇÕES VINCULADAS
+        */
         [HttpGet]
         [Route("{id:int}")]
         //[Authorize(Roles = "manager")]
@@ -69,138 +76,141 @@ namespace TaskManagementAspCore.Controllers
             return users;
         }
 
-            /*[HttpGet]
-            [Route("anonimo")]
-            [AllowAnonymous]
-            public string Anonimo() => "Anonimo";
+        /*[HttpGet]
+        [Route("anonimo")]
+        [AllowAnonymous]
+        public string Anonimo() => "Anonimo";
 
-            [HttpGet]
-            [Route("autenticado")]
-            [Authorize]
-            public string Autenticado() => "Autenticado";
+        [HttpGet]
+        [Route("autenticado")]
+        [Authorize]
+        public string Autenticado() => "Autenticado";
 
-            [HttpGet]
-            [Route("funcionario")]
-            [Authorize(Roles = "employee")]
-            public string Funcionario() => "Funcionario";
+        [HttpGet]
+        [Route("funcionario")]
+        [Authorize(Roles = "employee")]
+        public string Funcionario() => "Funcionario";
 
-            [HttpGet]
-            [Route("gerente")]
-            [Authorize(Roles = "manager")]
-            public string Gerente() => "Gerente";*/
+        [HttpGet]
+        [Route("gerente")]
+        [Authorize(Roles = "manager")]
+        public string Gerente() => "Gerente";*/
 
+        #endregion
 
+        #region POSTERS
 
-            /*
-            //POSTERS
-            */
-            [HttpPost]
-            [Route("")]
-            [AllowAnonymous]
-            //[Authorize(Roles = "manager")]
-            public async Task<ActionResult<User>> Post(
+        /*
+        //POSTERS
+        */
+        [HttpPost]
+        [Route("")]
+        [AllowAnonymous]
+        //[Authorize(Roles = "manager")]
+        public async Task<ActionResult<User>> Post(
                 [FromServices] DataContext context,
                 [FromBody] User model)
+        {
+            //Verifica se os dados são válidos
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            /*try
+            {*/
+            //Força o usuário a ser sempre "funcionário"
+            //model.Role = "employee";
+
+            context.Users.Add(model);
+            await context.SaveChangesAsync();
+
+            //Esconde a senha
+            //model.Password = "";
+            return model;
+
+            /*catch (Exception)
             {
-                //Verifica se os dados são válidos
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
-                try
-                {
-                    //Força o usuário a ser sempre "funcionário"
-                    //model.Role = "employee";
-
-                    context.Users.Add(model);
-                    await context.SaveChangesAsync();
-
-                    //Esconde a senha
-                    //model.Password = "";
-                    return model;
-                }
-                catch (Exception)
-                {
-                    return BadRequest(new { message = "Não foi possível criar o usuário" });
-                }
-            }
-
-            [HttpPost]
-            [Route("login")]
-            //[Authorize(Roles = "manager")]
-            [AllowAnonymous]
-            public async Task<ActionResult<dynamic>> Authenticate(
-            [FromServices] DataContext context,
-            [FromBody] User model)
-            {
-                var user = await context.Users
-                .AsNoTracking()
-                .Where(x => x.Name == model.Name && x.Password == model.Password)
-                .FirstOrDefaultAsync();
-
-                if (user == null)
-                {
-                    return NotFound(new { message = "Usuário ou senha Inválidos" });
-                }
-
-                var token = TokenService.GerateToken(user);
-                // Esconde a senha
-                user.Password = "";
-                return new { user = user, token = token };
-            }
-
-
-            /*
-            //PUTTERS
-            */
-            [HttpPut]
-            [Route("{id:int}")]
-            // [Authorize(Roles = "manager")]
-            public async Task<ActionResult<User>> Put(
-                        [FromServices] DataContext context,
-                        [FromBody] User model, int id)
-            {
-                //Verifica se os dados são válidos
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
-                try
-                {
-                    context.Entry(model).State = EntityState.Modified;
-                    await context.SaveChangesAsync();
-                    return model;
-                }
-                catch (Exception)
-                {
-                    return BadRequest(new { message = "Não foi possível criar o usuário" });
-                }
-            }
-
-            /*
-            //DELETTERS
-            */
-            [HttpDelete]
-            [Route("{id:int}")]
-            // [Authorize(Roles = "manager")]
-            public async Task<ActionResult<List<User>>> Delete(
-            int id,
-           [FromServices] DataContext _context)
-            {
-                var users = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
-                if (users == null)
-                {
-                    return NotFound(new { message = "Usuario não encontrado" });
-                }
-                try
-                {
-                    _context.Users.Remove(users);
-                    await _context.SaveChangesAsync();
-                    return Ok(new { message = $"Usuário {users.Id} removido com sucesso" });
-                }
-                catch
-                {
-                    return BadRequest(new { message = "Não foi possivel remover a categoria" });
-                }
-
-            }
+                return BadRequest(new { message = "Não foi possível criar o usuário" });
+            }*/
         }
+
+        [HttpPost]
+        [Route("login")]
+        //[Authorize(Roles = "manager")]
+        [AllowAnonymous]
+        public async Task<ActionResult<dynamic>> Authenticate(
+        [FromServices] DataContext context,
+        [FromBody] User model)
+        {
+            var user = await context.Users
+            .AsNoTracking()
+            .Where(x => x.Name == model.Name && x.Password == model.Password)
+            .FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                return NotFound(new { message = "Usuário ou senha Inválidos" });
+            }
+
+            var token = TokenService.GerateToken(user);
+            // Esconde a senha
+            user.Password = "";
+            return new { user = user, token = token };
+        }
+        #endregion
+
+        #region PUTTERS
+
+
+        /*
+        //PUTTERS
+        */
+        [HttpPut]
+        [Route("{id:int}")]
+        //[Authorize(Roles = "manager")]
+        public async Task<ActionResult<User>> Put(
+                    [FromServices] DataContext context,
+                    [FromBody] User model)
+        {
+            //Verifica se os dados são válidos
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+                context.Entry(model).State = EntityState.Modified;
+                await context.SaveChangesAsync();
+                return model;
+        }
+
+        #endregion
+
+        #region DELETTERS
+
+        /*
+        //DELETTERS
+        */
+        [HttpDelete]
+        [Route("{id:int}")]
+        // [Authorize(Roles = "manager")]
+        public async Task<ActionResult<List<User>>> Delete(
+            int id,
+           [FromServices] DataContext context)
+        {
+            var users = await context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            if (users == null)
+            {
+                return NotFound(new { message = "Usuario não encontrado" });
+            }
+            try
+            {
+                context.Users.Remove(users);
+                await context.SaveChangesAsync();
+                return Ok(new { message = $"Usuário {users.Id} removido com sucesso" });
+            }
+            catch
+            {
+                return BadRequest(new { message = "Não foi possivel remover a categoria" });
+            }
+
+        }
+        #endregion
     }
+}

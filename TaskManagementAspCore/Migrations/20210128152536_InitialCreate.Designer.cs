@@ -10,7 +10,7 @@ using TaskManagementAspCore.Data;
 namespace TaskManagementAspCore.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210127190546_InitialCreate")]
+    [Migration("20210128152536_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

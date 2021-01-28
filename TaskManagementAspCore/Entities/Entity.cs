@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace TaskManager.Entities
@@ -11,7 +13,7 @@ namespace TaskManager.Entities
             //Id = Guid.NewGuid().ToString("N").ToUpper();
         }
 
-       //public string Id { get; private set; }
+        //public string Id { get; private set; }
 
         public int Id { get; set; }
 

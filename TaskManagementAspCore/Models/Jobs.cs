@@ -7,6 +7,7 @@ namespace TaskManagementAspCore.Models
 {
     public class Jobs : Entity
     {
+        #region Constructors
         public Jobs()
         {
             this.Status = ETaskStatus.CREATED;
@@ -31,14 +32,18 @@ namespace TaskManagementAspCore.Models
             this.Users = new HashSet<User>();
             this.Users = users;
         }
+        #endregion
 
+        #region Atributtes
         public string Name { get;  set; }
         public ETaskStatus PredecessorTaskStatus { get;  set; }
         public DateTime StartDate { get;  set; }
         public DateTime EndDate { get;  set; }
         public ETaskStatus Status { get;  set; }
         public virtual ICollection<User> Users { get; set; }
+        #endregion
 
+        #region Methods
         public void SetStarted()
         {
             this.Status = ETaskStatus.STARTED;
@@ -46,5 +51,6 @@ namespace TaskManagementAspCore.Models
         public void SetConcluded() {
             this.Status = ETaskStatus.CONCLUDED;
         }
+        #endregion
     }
 }

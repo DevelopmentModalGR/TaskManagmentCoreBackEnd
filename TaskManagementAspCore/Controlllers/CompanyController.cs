@@ -13,8 +13,7 @@ namespace TaskManagementAspCore.Controlllers
     [Route("companies")]
     public class CompanyController : Controller
     {
-
-        //GETTERS
+        #region GETTERS
 
         [HttpGet]
         [Route("")]
@@ -44,9 +43,9 @@ namespace TaskManagementAspCore.Controlllers
             .ToListAsync();
             return companies;
         }
+        #endregion
 
-
-        //POSTERS
+        #region POSTERS
 
         [HttpPost]
         [Route("")]
@@ -77,11 +76,12 @@ namespace TaskManagementAspCore.Controlllers
             }
         }
 
+        #endregion
 
-        //PUTTERS
+        #region PUTTERS
 
         [HttpPut]
-        [Route("id:int")]
+        [Route("{id:int}")]
         //[Authorize(Roles = "manager")]
         public async Task<ActionResult<Company>> Put(
                     [FromServices] DataContext context,
@@ -102,7 +102,9 @@ namespace TaskManagementAspCore.Controlllers
                 return BadRequest(new { message = "Não foi possível criar o usuário" });
             }
         }
+        #endregion
 
+        #region DELETTERS
 
         //DELETTERS
 
@@ -130,5 +132,6 @@ namespace TaskManagementAspCore.Controlllers
             }
 
         }
+        #endregion
     }
 }

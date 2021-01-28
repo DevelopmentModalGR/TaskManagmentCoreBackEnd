@@ -7,6 +7,7 @@ namespace TaskManagementAspCore.Models
 {
     public class CheckoutProcess : Entity
     {
+        #region Constructors 
         public CheckoutProcess()
         {
             this.Tasks = new HashSet<Jobs>();
@@ -31,14 +32,18 @@ namespace TaskManagementAspCore.Models
             EndDate = endDate;
             this.Tasks = new HashSet<Jobs>();
         }
+        #endregion
 
+        #region Attributes
         public string Name { get;  set; }
         public Department Department { get;  set; }
         public string Description { get;  set; }
         public DateTime StartDate { get;  set; }
         public DateTime EndDate { get;  set; }
         public virtual ICollection<Jobs> Tasks { get; set; }
+        #endregion
 
+        #region Methods
         public bool CheckProcessStatus()
         {
             return false;
@@ -70,5 +75,6 @@ namespace TaskManagementAspCore.Models
         {
             //implementar atualização da task
         }
+        #endregion
     }
 }

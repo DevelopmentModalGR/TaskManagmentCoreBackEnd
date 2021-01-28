@@ -15,15 +15,30 @@ namespace TaskManagementAspCore.Controllers
     [Route("departments")]
     public class DepartmentController : Controller
     {
+        #region GETTERS
         /*
         //GETTERS
         */
         [HttpGet]
         [Route("")]
         //[Authorize(Roles = "manager")]
-        public async Task<ActionResult<List<Department>>> GetAction(
+        public async Task<ActionResult<List<Department>>> GetAllDepartments(
            [FromServices] DataContext context,
            [FromBody] Department model)
+        {
+            var department = await context
+            .Departments
+            .AsNoTracking()
+            .ToListAsync();
+            return department;
+        }
+
+        [HttpGet]
+        [Route("allinfo")]
+        //[Authorize(Roles = "manager")]
+        public async Task<ActionResult<List<Department>>> GetDepartmentsAllInfo(
+          [FromServices] DataContext context,
+          [FromBody] Department model)
         {
             var department = await context
             .Departments
@@ -34,6 +49,22 @@ namespace TaskManagementAspCore.Controllers
             return department;
         }
 
+        [HttpGet]
+        [Route("{id:int}")]
+        //[Authorize(Roles = "manager")]
+        public async Task<ActionResult<List<Department>>> GetUserById(
+        int id, [FromServices] DataContext context,
+         [FromBody] Department model)
+        {
+            var departments = await context
+            .Departments
+            .Include(x => x.CheckoutProcesses)
+            .Include(x => x.Users)
+            .Where(x => x.Id == id)
+            .AsNoTracking()
+            .ToListAsync();
+            return departments;
+        }
         /*[HttpGet]
         [Route("anonimo")]
         [AllowAnonymous]
@@ -54,8 +85,9 @@ namespace TaskManagementAspCore.Controllers
         [Authorize(Roles = "manager")]
         public string Gerente() => "Gerente";*/
 
+        #endregion
 
-
+        #region POSTERS
         /*
         //POSTERS
         */
@@ -88,6 +120,9 @@ namespace TaskManagementAspCore.Controllers
                 return BadRequest(new { message = "Não foi possível criar o usuário" });
             }
         }
+        #endregion
+
+        #region PUTTERS
 
         /*
         //PUTTERS
@@ -114,6 +149,9 @@ namespace TaskManagementAspCore.Controllers
                 return BadRequest(new { message = "Não foi possível criar o usuário" });
             }
         }
+        #endregion
+
+        #region DELETTERS
 
         /*
         //DELETTERS
@@ -142,5 +180,6 @@ namespace TaskManagementAspCore.Controllers
             }
 
         }
+        #endregion
     }
 }

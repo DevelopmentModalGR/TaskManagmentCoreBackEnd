@@ -8,6 +8,7 @@ namespace TaskManagementAspCore.Models
 
     public class Department : Entity
     {
+        #region Constructors
         public Department()
         {
             this.CheckoutProcesses = new HashSet<CheckoutProcess>();
@@ -26,15 +27,13 @@ namespace TaskManagementAspCore.Models
             this.Users = new HashSet<User>();
             this.Users = users;
         }
+        #endregion
 
+        #region Atributtes
         public string Name { get; set; }
         public virtual ICollection<CheckoutProcess> CheckoutProcesses { get; set; }
         public virtual ICollection<User> Users { get; set; }
-
-
-
-
-        /*public HashSet<DepartmentsUsers> DepartmentsUsers { get; set; }*/
+        #endregion
 
     }
 }

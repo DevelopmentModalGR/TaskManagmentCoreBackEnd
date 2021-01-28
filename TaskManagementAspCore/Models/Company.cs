@@ -7,6 +7,7 @@ namespace TaskManagementAspCore.Models
 {
     public class Company : Entity
     {
+        #region Constructors
         public Company()
         {
             this.Users = new HashSet<User>();
@@ -22,6 +23,7 @@ namespace TaskManagementAspCore.Models
             this.Users = new HashSet<User>();
             this.Users = user;
         }
+        #endregion
 
         #region attributes        
         public string Name { get;  set; }
