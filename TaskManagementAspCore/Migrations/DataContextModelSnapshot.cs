@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TaskManager.Data;
+using TaskManagementAspCore.Data;
 
 namespace TaskManagementAspCore.Migrations
 {
@@ -36,20 +36,20 @@ namespace TaskManagementAspCore.Migrations
 
             modelBuilder.Entity("JobsUser", b =>
                 {
-                    b.Property<int>("TasksId")
+                    b.Property<int>("JobsId")
                         .HasColumnType("int");
 
                     b.Property<int>("UsersId")
                         .HasColumnType("int");
 
-                    b.HasKey("TasksId", "UsersId");
+                    b.HasKey("JobsId", "UsersId");
 
                     b.HasIndex("UsersId");
 
                     b.ToTable("JobsUser");
                 });
 
-            modelBuilder.Entity("TaskManager.Models.CheckoutProcess", b =>
+            modelBuilder.Entity("TaskManagementAspCore.Models.CheckoutProcess", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -75,10 +75,10 @@ namespace TaskManagementAspCore.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("CheckOutProcess");
+                    b.ToTable("CheckOutProcesses");
                 });
 
-            modelBuilder.Entity("TaskManager.Models.Company", b =>
+            modelBuilder.Entity("TaskManagementAspCore.Models.Company", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -96,7 +96,7 @@ namespace TaskManagementAspCore.Migrations
                     b.ToTable("Companies");
                 });
 
-            modelBuilder.Entity("TaskManager.Models.Department", b =>
+            modelBuilder.Entity("TaskManagementAspCore.Models.Department", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -111,7 +111,7 @@ namespace TaskManagementAspCore.Migrations
                     b.ToTable("Departments");
                 });
 
-            modelBuilder.Entity("TaskManager.Models.Jobs", b =>
+            modelBuilder.Entity("TaskManagementAspCore.Models.Jobs", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -143,14 +143,14 @@ namespace TaskManagementAspCore.Migrations
                     b.ToTable("Jobs");
                 });
 
-            modelBuilder.Entity("TaskManager.Models.User", b =>
+            modelBuilder.Entity("TaskManagementAspCore.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("CompanyId")
+                    b.Property<int>("CompanyId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -183,13 +183,13 @@ namespace TaskManagementAspCore.Migrations
 
             modelBuilder.Entity("DepartmentUser", b =>
                 {
-                    b.HasOne("TaskManager.Models.Department", null)
+                    b.HasOne("TaskManagementAspCore.Models.Department", null)
                         .WithMany()
                         .HasForeignKey("DepartmentsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TaskManager.Models.User", null)
+                    b.HasOne("TaskManagementAspCore.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -198,55 +198,57 @@ namespace TaskManagementAspCore.Migrations
 
             modelBuilder.Entity("JobsUser", b =>
                 {
-                    b.HasOne("TaskManager.Models.Jobs", null)
+                    b.HasOne("TaskManagementAspCore.Models.Jobs", null)
                         .WithMany()
-                        .HasForeignKey("TasksId")
+                        .HasForeignKey("JobsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TaskManager.Models.User", null)
+                    b.HasOne("TaskManagementAspCore.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TaskManager.Models.CheckoutProcess", b =>
+            modelBuilder.Entity("TaskManagementAspCore.Models.CheckoutProcess", b =>
                 {
-                    b.HasOne("TaskManager.Models.Department", "Department")
+                    b.HasOne("TaskManagementAspCore.Models.Department", "Department")
                         .WithMany("CheckoutProcesses")
                         .HasForeignKey("DepartmentId");
 
                     b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("TaskManager.Models.Jobs", b =>
+            modelBuilder.Entity("TaskManagementAspCore.Models.Jobs", b =>
                 {
-                    b.HasOne("TaskManager.Models.CheckoutProcess", null)
+                    b.HasOne("TaskManagementAspCore.Models.CheckoutProcess", null)
                         .WithMany("Tasks")
                         .HasForeignKey("CheckoutProcessId");
                 });
 
-            modelBuilder.Entity("TaskManager.Models.User", b =>
+            modelBuilder.Entity("TaskManagementAspCore.Models.User", b =>
                 {
-                    b.HasOne("TaskManager.Models.Company", "Company")
+                    b.HasOne("TaskManagementAspCore.Models.Company", "Company")
                         .WithMany("Users")
-                        .HasForeignKey("CompanyId");
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Company");
                 });
 
-            modelBuilder.Entity("TaskManager.Models.CheckoutProcess", b =>
+            modelBuilder.Entity("TaskManagementAspCore.Models.CheckoutProcess", b =>
                 {
                     b.Navigation("Tasks");
                 });
 
-            modelBuilder.Entity("TaskManager.Models.Company", b =>
+            modelBuilder.Entity("TaskManagementAspCore.Models.Company", b =>
                 {
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("TaskManager.Models.Department", b =>
+            modelBuilder.Entity("TaskManagementAspCore.Models.Department", b =>
                 {
                     b.Navigation("CheckoutProcesses");
                 });

@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TaskManager.Models;
+using TaskManagementAspCore.Models;
 
-namespace TaskManager.Data
+namespace TaskManagementAspCore.Data
 {
 
     public class DataContext : DbContext
@@ -15,13 +15,15 @@ namespace TaskManager.Data
             //
         }
 
-
-
+        public DbSet<CheckoutProcess> CheckOutProcesses { get; set; }
+        public DbSet<Company> Companies { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Jobs> Jobs { get; set; }
-        public DbSet<CheckoutProcess> CheckOutProcess { get; set; }               
         public DbSet<User> Users { get; set; }
-        public DbSet<Company> Companies { get; set; }
-        public object User { get; internal set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+        }
     }
 }

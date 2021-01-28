@@ -12,7 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Linq;
 using System.Text;
-using TaskManager.Data;
+using TaskManagementAspCore.Data;
 
 namespace TaskManagementAspCore
 {
@@ -93,7 +93,7 @@ namespace TaskManagementAspCore
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/V1/swagger.json", "Shop API V1");
+                c.SwaggerEndpoint("/swagger/V1/swagger.json", "TaskManagment API V1");
             });
 
             app.UseHttpsRedirection();

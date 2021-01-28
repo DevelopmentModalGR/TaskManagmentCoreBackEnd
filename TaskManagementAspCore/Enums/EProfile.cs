@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TaskManager.Enums
+namespace TaskManagementAspCore.Enums
 {
     public enum EProfile
     {

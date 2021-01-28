@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TaskManager.Entities;
 
-namespace TaskManager.Models
+namespace TaskManagementAspCore.Models
 {
     public class CheckoutProcess : Entity
     {

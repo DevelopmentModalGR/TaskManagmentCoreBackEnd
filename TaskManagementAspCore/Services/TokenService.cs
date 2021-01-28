@@ -6,9 +6,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using TaskManagementAspCore;
-using TaskManager.Models;
+using TaskManagementAspCore.Models;
 
-namespace Shop.Services
+namespace TaskManagementAspCore.Services
 {
     public static class TokenService
     {

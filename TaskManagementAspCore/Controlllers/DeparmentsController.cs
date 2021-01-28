@@ -1,60 +1,71 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
 using System.Linq;
-using System.Threading.Tasks;
-using TaskManagementAspCore.Data;
+using TaskManagementAspCore.Services;
 using TaskManagementAspCore.Models;
+using TaskManagementAspCore.Data;
 
-namespace TaskManagementAspCore.Controlllers
+namespace TaskManagementAspCore.Controllers
 {
-    [Route("companies")]
-    public class CompanyController : Controller
+    [Route("departments")]
+    public class DepartmentController : Controller
     {
-
+        /*
         //GETTERS
-
+        */
         [HttpGet]
         [Route("")]
         //[Authorize(Roles = "manager")]
-        public async Task<ActionResult<List<Company>>> GetAction(
-           [FromServices] DataContext context)
+        public async Task<ActionResult<List<Department>>> GetAction(
+           [FromServices] DataContext context,
+           [FromBody] Department model)
         {
-            var companies = await context
-            .Companies
+            var department = await context
+            .Departments
+            .Include(x => x.CheckoutProcesses)
             .Include(x => x.Users)
             .AsNoTracking()
             .ToListAsync();
-            return companies;
+            return department;
         }
+
+        /*[HttpGet]
+        [Route("anonimo")]
+        [AllowAnonymous]
+        public string Anonimo() => "Anonimo";
 
         [HttpGet]
-        [Route("{id:int}")]
-        //[Authorize(Roles = "manager")]
-        public async Task<ActionResult<List<Company>>> GetAction(
-           [FromServices] DataContext context, int id)
-        {
-            var companies = await context
-            .Companies
-            .Include(x => x.Users)
-            .AsNoTracking()
-            .Where(x => x.Id == id)
-            .ToListAsync();
-            return companies;
-        }
+        [Route("autenticado")]
+        [Authorize]
+        public string Autenticado() => "Autenticado";
+
+        [HttpGet]
+        [Route("funcionario")]
+        [Authorize(Roles = "employee")]
+        public string Funcionario() => "Funcionario";
+
+        [HttpGet]
+        [Route("gerente")]
+        [Authorize(Roles = "manager")]
+        public string Gerente() => "Gerente";*/
 
 
+
+        /*
         //POSTERS
-
+        */
         [HttpPost]
         [Route("")]
         [AllowAnonymous]
         //[Authorize(Roles = "manager")]
-        public async Task<ActionResult<Company>> Post(
+        public async Task<ActionResult<Department>> Post(
             [FromServices] DataContext context,
-            [FromBody] Company model)
+            [FromBody] Department model)
         {
             //Verifica se os dados são válidos
             if (!ModelState.IsValid)
@@ -65,10 +76,11 @@ namespace TaskManagementAspCore.Controlllers
                 //Força o usuário a ser sempre "funcionário"
                 //model.Role = "employee";
 
-                context.Companies.Add(model);
+                context.Departments.Add(model);
                 await context.SaveChangesAsync();
 
                 //Esconde a senha
+                //model.Password = "";
                 return model;
             }
             catch (Exception)
@@ -77,15 +89,15 @@ namespace TaskManagementAspCore.Controlllers
             }
         }
 
-
+        /*
         //PUTTERS
-
+        */
         [HttpPut]
-        [Route("id:int")]
-        //[Authorize(Roles = "manager")]
-        public async Task<ActionResult<Company>> Put(
+        [Route("{id:int}")]
+        // [Authorize(Roles = "manager")]
+        public async Task<ActionResult<Department>> Put(
                     [FromServices] DataContext context,
-                    [FromBody] Company model, int id)
+                    [FromBody] Department model, int id)
         {
             //Verifica se os dados são válidos
             if (!ModelState.IsValid)
@@ -103,26 +115,26 @@ namespace TaskManagementAspCore.Controlllers
             }
         }
 
-
+        /*
         //DELETTERS
-
+        */
         [HttpDelete]
         [Route("{id:int}")]
-        //[Authorize(Roles = "manager")]
-        public async Task<ActionResult<List<Company>>> Delete(
+        // [Authorize(Roles = "manager")]
+        public async Task<ActionResult<List<User>>> Delete(
         int id,
-        [FromServices] DataContext _context)
+       [FromServices] DataContext _context)
         {
-            var companies = await _context.Companies.FirstOrDefaultAsync(x => x.Id == id);
-            if (companies == null)
+            var departments = await _context.Departments.FirstOrDefaultAsync(x => x.Id == id);
+            if (departments == null)
             {
                 return NotFound(new { message = "Usuario não encontrado" });
             }
             try
             {
-                _context.Companies.Remove(companies);
+                _context.Departments.Remove(departments);
                 await _context.SaveChangesAsync();
-                return Ok(new { message = $"Usuário {companies.Id} removido com sucesso" });
+                return Ok(new { message = $"Usuário {departments.Id} removido com sucesso" });
             }
             catch
             {

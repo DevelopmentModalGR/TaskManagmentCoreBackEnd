@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using TaskManager.Entities;
-using TaskManager.ValueObjects;
 
-namespace TaskManager.Models
+namespace TaskManagementAspCore.Models
 {
-    
+
     public class Department : Entity
     {
         public Department()
@@ -23,13 +22,19 @@ namespace TaskManager.Models
         public Department(string name, List<User> users)
         {
             Name = name;
-            this.CheckoutProcesses = new HashSet<CheckoutProcess>();           
+            this.CheckoutProcesses = new HashSet<CheckoutProcess>();
             this.Users = new HashSet<User>();
             this.Users = users;
         }
 
-        public string Name { get;  set; }
+        public string Name { get; set; }
         public virtual ICollection<CheckoutProcess> CheckoutProcesses { get; set; }
         public virtual ICollection<User> Users { get; set; }
+
+
+
+
+        /*public HashSet<DepartmentsUsers> DepartmentsUsers { get; set; }*/
+
     }
 }

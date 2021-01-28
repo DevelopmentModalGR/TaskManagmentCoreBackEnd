@@ -1,4 +1,4 @@
-namespace TaskManager.Enums
+namespace TaskManagementAspCore.Enums
 {
     public enum ETaskStatus
     {

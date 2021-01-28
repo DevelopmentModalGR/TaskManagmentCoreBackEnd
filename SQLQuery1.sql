@@ -1,4 +1,4 @@
-select * from dbo.CheckOutProcess
+select * from dbo.CheckOutProcesses
 
 
 select * from dbo.Departments
@@ -7,7 +7,7 @@ select * from dbo.DepartmentUser
 
 select * from dbo.Jobs
 
-select * from dbo.JobsUser
+select * from dbo.JobsUsers
 
 select * from dbo.Users
 

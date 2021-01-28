@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using TaskManager.Enums;
 using TaskManager.Entities;
+using TaskManagementAspCore.Enums;
 
-namespace TaskManager.Models
+namespace TaskManagementAspCore.Models
 {
     public class Jobs : Entity
     {

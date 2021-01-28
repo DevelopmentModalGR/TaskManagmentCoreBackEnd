@@ -47,7 +47,7 @@ namespace TaskManagementAspCore.Migrations
                     IsAdmin = table.Column<bool>(type: "bit", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Role = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CompanyId = table.Column<int>(type: "int", nullable: true)
+                    CompanyId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -57,11 +57,11 @@ namespace TaskManagementAspCore.Migrations
                         column: x => x.CompanyId,
                         principalTable: "Companies",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "CheckOutProcess",
+                name: "CheckOutProcesses",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -74,9 +74,9 @@ namespace TaskManagementAspCore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CheckOutProcess", x => x.Id);
+                    table.PrimaryKey("PK_CheckOutProcesses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CheckOutProcess_Departments_DepartmentId",
+                        name: "FK_CheckOutProcesses_Departments_DepartmentId",
                         column: x => x.DepartmentId,
                         principalTable: "Departments",
                         principalColumn: "Id",
@@ -124,9 +124,9 @@ namespace TaskManagementAspCore.Migrations
                 {
                     table.PrimaryKey("PK_Jobs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Jobs_CheckOutProcess_CheckoutProcessId",
+                        name: "FK_Jobs_CheckOutProcesses_CheckoutProcessId",
                         column: x => x.CheckoutProcessId,
-                        principalTable: "CheckOutProcess",
+                        principalTable: "CheckOutProcesses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -135,15 +135,15 @@ namespace TaskManagementAspCore.Migrations
                 name: "JobsUser",
                 columns: table => new
                 {
-                    TasksId = table.Column<int>(type: "int", nullable: false),
+                    JobsId = table.Column<int>(type: "int", nullable: false),
                     UsersId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JobsUser", x => new { x.TasksId, x.UsersId });
+                    table.PrimaryKey("PK_JobsUser", x => new { x.JobsId, x.UsersId });
                     table.ForeignKey(
-                        name: "FK_JobsUser_Jobs_TasksId",
-                        column: x => x.TasksId,
+                        name: "FK_JobsUser_Jobs_JobsId",
+                        column: x => x.JobsId,
                         principalTable: "Jobs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -156,8 +156,8 @@ namespace TaskManagementAspCore.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CheckOutProcess_DepartmentId",
-                table: "CheckOutProcess",
+                name: "IX_CheckOutProcesses_DepartmentId",
+                table: "CheckOutProcesses",
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
@@ -196,7 +196,7 @@ namespace TaskManagementAspCore.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "CheckOutProcess");
+                name: "CheckOutProcesses");
 
             migrationBuilder.DropTable(
                 name: "Companies");

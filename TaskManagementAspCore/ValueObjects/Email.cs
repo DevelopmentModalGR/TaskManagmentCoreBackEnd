@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskManager.ValueObjects
+namespace TaskManagementAspCore.ValueObjects
 {
     public class Email : Notifiable
     {
