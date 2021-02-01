@@ -22,7 +22,8 @@ namespace TaskManagementAspCore.Controllers
         */
         [HttpGet]
         [Route("")]
-        //[Authorize(Roles = "manager")]
+        [AllowAnonymous]
+        //[Authorize(Roles = "employee")]
         public async Task<ActionResult<List<User>>> GetUsers(
            [FromServices] DataContext context,
            [FromBody] User model)
@@ -40,7 +41,7 @@ namespace TaskManagementAspCore.Controllers
        */
         [HttpGet]
         [Route("allinfo")]
-        //[Authorize(Roles = "manager")]
+        //[Authorize(Roles = "admin")]
         public async Task<ActionResult<List<User>>> GetUsersAllInfo(
            [FromServices] DataContext context,
            [FromBody] User model)
@@ -75,6 +76,27 @@ namespace TaskManagementAspCore.Controllers
             .ToListAsync();
             return users;
         }
+        /*
+        //RETORNA O USUARIO PELO EMAIL INFORMADO
+        */
+        [HttpGet]
+        [Route("{email: string}")]
+        //[Authorize(Roles = "manager")]
+        public async Task<ActionResult<List<User>>> GetAction(
+           [FromServices] DataContext context, string email)
+        {
+            var user = await context
+            .Users
+            .Include(x => x.Company)
+            .AsNoTracking()
+            .Where(x => x.Email == email)
+            .ToListAsync();
+            return user;
+        }
+
+        #endregion
+
+        #region VerificarAutenticidade
 
         /*[HttpGet]
         [Route("anonimo")]
@@ -101,19 +123,21 @@ namespace TaskManagementAspCore.Controllers
         #region POSTERS
 
         /*
-        //POSTERS
+        //INSERE UM USUARIO
         */
         [HttpPost]
-        [Route("")]
+        [Route("newuser")]
         [AllowAnonymous]
         //[Authorize(Roles = "manager")]
-        public async Task<ActionResult<User>> Post(
-                [FromServices] DataContext context,
-                [FromBody] User model)
+        public async Task<ActionResult<User>> PostUser(
+            [FromServices] DataContext context,
+            [FromBody] User model)
         {
             //Verifica se os dados são válidos
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+            if (model.Company == null)
+                return BadRequest(new { message = "Insira uma Companhia" });
 
             /*try
             {*/
@@ -121,6 +145,8 @@ namespace TaskManagementAspCore.Controllers
             //model.Role = "employee";
 
             context.Users.Add(model);
+            model.Departments = null;
+            model.Jobs = null;
             await context.SaveChangesAsync();
 
             //Esconde a senha
@@ -133,6 +159,9 @@ namespace TaskManagementAspCore.Controllers
             }*/
         }
 
+        /*
+        //LOGAR USUARIO E RETORNAR TOKEN DE AUTENTICIDADE
+        */
         [HttpPost]
         [Route("login")]
         //[Authorize(Roles = "manager")]
@@ -143,7 +172,7 @@ namespace TaskManagementAspCore.Controllers
         {
             var user = await context.Users
             .AsNoTracking()
-            .Where(x => x.Name == model.Name && x.Password == model.Password)
+            .Where(x => x.Email == model.Email && x.Password == model.Password)
             .FirstOrDefaultAsync();
 
             if (user == null)
@@ -159,25 +188,23 @@ namespace TaskManagementAspCore.Controllers
         #endregion
 
         #region PUTTERS
-
-
         /*
         //PUTTERS
         */
         [HttpPut]
         [Route("{id:int}")]
         //[Authorize(Roles = "manager")]
-        public async Task<ActionResult<User>> Put(
+        public async Task<ActionResult<User>> AlterUser(
                     [FromServices] DataContext context,
-                    [FromBody] User model)
+                    [FromBody] User model, int id)
         {
             //Verifica se os dados são válidos
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-                context.Entry(model).State = EntityState.Modified;
-                await context.SaveChangesAsync();
-                return model;
+            context.Entry(model).State = EntityState.Modified;
+            await context.SaveChangesAsync();
+            return model;
         }
 
         #endregion

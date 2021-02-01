@@ -65,25 +65,6 @@ namespace TaskManagementAspCore.Controllers
             .ToListAsync();
             return departments;
         }
-        /*[HttpGet]
-        [Route("anonimo")]
-        [AllowAnonymous]
-        public string Anonimo() => "Anonimo";
-
-        [HttpGet]
-        [Route("autenticado")]
-        [Authorize]
-        public string Autenticado() => "Autenticado";
-
-        [HttpGet]
-        [Route("funcionario")]
-        [Authorize(Roles = "employee")]
-        public string Funcionario() => "Funcionario";
-
-        [HttpGet]
-        [Route("gerente")]
-        [Authorize(Roles = "manager")]
-        public string Gerente() => "Gerente";*/
 
         #endregion
 
@@ -161,17 +142,17 @@ namespace TaskManagementAspCore.Controllers
         // [Authorize(Roles = "manager")]
         public async Task<ActionResult<List<User>>> Delete(
         int id,
-       [FromServices] DataContext _context)
+        [FromServices] DataContext context)
         {
-            var departments = await _context.Departments.FirstOrDefaultAsync(x => x.Id == id);
+            var departments = await context.Departments.FirstOrDefaultAsync(x => x.Id == id);
             if (departments == null)
             {
                 return NotFound(new { message = "Usuario não encontrado" });
             }
             try
             {
-                _context.Departments.Remove(departments);
-                await _context.SaveChangesAsync();
+                context.Departments.Remove(departments);
+                await context.SaveChangesAsync();
                 return Ok(new { message = $"Usuário {departments.Id} removido com sucesso" });
             }
             catch

@@ -10,7 +10,7 @@ namespace TaskManagementAspCore.Models
         #region Constructors 
         public CheckoutProcess()
         {
-            this.Tasks = new HashSet<Jobs>();
+            this.Jobs = new HashSet<Jobs>();
         }
         public CheckoutProcess(string name, Department department, string description, DateTime startDate, DateTime endDate, List<Jobs> tasks)
         {
@@ -19,8 +19,8 @@ namespace TaskManagementAspCore.Models
             Description = description;
             StartDate = startDate;
             EndDate = endDate;
-            this.Tasks = new HashSet<Jobs>();
-            this.Tasks = tasks;
+            this.Jobs = new HashSet<Jobs>();
+            this.Jobs = tasks;
         }
 
         public CheckoutProcess(string name, Department department, string description, DateTime startDate, DateTime endDate)
@@ -30,7 +30,7 @@ namespace TaskManagementAspCore.Models
             Description = description;
             StartDate = startDate;
             EndDate = endDate;
-            this.Tasks = new HashSet<Jobs>();
+            this.Jobs = new HashSet<Jobs>();
         }
         #endregion
 
@@ -40,7 +40,7 @@ namespace TaskManagementAspCore.Models
         public string Description { get;  set; }
         public DateTime StartDate { get;  set; }
         public DateTime EndDate { get;  set; }
-        public virtual ICollection<Jobs> Tasks { get; set; }
+        public virtual ICollection<Jobs> Jobs { get; set; }
         #endregion
 
         #region Methods

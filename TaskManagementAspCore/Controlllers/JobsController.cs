@@ -7,11 +7,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using TaskManagementAspCore.Data;
 using TaskManagementAspCore.Models;
-
 namespace TaskManagementAspCore.Controlllers
 {
-    [Route("companies")]
-    public class CompanyController : Controller
+    [Route("jobs")]
+    public class JobsController : Controller
     {
         #region GETTERS
 
@@ -21,14 +20,14 @@ namespace TaskManagementAspCore.Controlllers
         [HttpGet]
         [Route("")]
         //[Authorize(Roles = "manager")]
-        public async Task<ActionResult<List<Company>>> GetCompany(
+        public async Task<ActionResult<List<Jobs>>> GetCompany(
            [FromServices] DataContext context)
         {
-            var companies = await context
-            .Companies
+            var jobs = await context
+            .Jobs
             .AsNoTracking()
             .ToListAsync();
-            return companies;
+            return jobs;
         }
 
         /*
@@ -37,16 +36,16 @@ namespace TaskManagementAspCore.Controlllers
         [HttpGet]
         [Route("{id:int}")]
         //[Authorize(Roles = "manager")]
-        public async Task<ActionResult<List<Company>>> GetCompanybyId(
+        public async Task<ActionResult<List<Jobs>>> GetCompanybyId(
            [FromServices] DataContext context, int id)
         {
-            var companies = await context
-            .Companies
+            var jobs = await context
+            .Jobs
             .Include(x => x.Users)
             .AsNoTracking()
             .Where(x => x.Id == id)
             .ToListAsync();
-            return companies;
+            return jobs;
         }
 
         /*
@@ -55,16 +54,16 @@ namespace TaskManagementAspCore.Controlllers
         [HttpGet]
         [Route("{name: string}")]
         //[Authorize(Roles = "manager")]
-        public async Task<ActionResult<List<Company>>> GetAction(
+        public async Task<ActionResult<List<Jobs>>> GetAction(
            [FromServices] DataContext context, string name)
         {
-            var companies = await context
-            .Companies
+            var jobs = await context
+            .Jobs
             .Include(x => x.Users)
             .AsNoTracking()
             .Where(x => x.Name == name)
             .ToListAsync();
-            return companies;
+            return jobs;
         }
         #endregion
 
@@ -74,9 +73,9 @@ namespace TaskManagementAspCore.Controlllers
         [Route("")]
         [AllowAnonymous]
         //[Authorize(Roles = "manager")]
-        public async Task<ActionResult<Company>> Post(
+        public async Task<ActionResult<Jobs>> Post(
             [FromServices] DataContext context,
-            [FromBody] Company model)
+            [FromBody] Jobs model)
         {
             //Verifica se os dados são válidos
             if (!ModelState.IsValid)
@@ -87,7 +86,7 @@ namespace TaskManagementAspCore.Controlllers
                 //Força o usuário a ser sempre "funcionário"
                 //model.Role = "employee";
 
-                context.Companies.Add(model);
+                context.Jobs.Add(model);
                 await context.SaveChangesAsync();
 
                 //Esconde a senha
@@ -106,9 +105,9 @@ namespace TaskManagementAspCore.Controlllers
         [HttpPut]
         [Route("{id:int}")]
         //[Authorize(Roles = "manager")]
-        public async Task<ActionResult<Company>> Put(
+        public async Task<ActionResult<Jobs>> Put(
                     [FromServices] DataContext context,
-                    [FromBody] Company model, int id)
+                    [FromBody] Jobs model, int id)
         {
             //Verifica se os dados são válidos
             if (!ModelState.IsValid)
@@ -134,20 +133,20 @@ namespace TaskManagementAspCore.Controlllers
         [HttpDelete]
         [Route("{id:int}")]
         //[Authorize(Roles = "manager")]
-        public async Task<ActionResult<List<Company>>> Delete(
+        public async Task<ActionResult<List<Jobs>>> Delete(
         int id,
         [FromServices] DataContext _context)
         {
-            var companies = await _context.Companies.FirstOrDefaultAsync(x => x.Id == id);
-            if (companies == null)
+            var jobs = await _context.Jobs.FirstOrDefaultAsync(x => x.Id == id);
+            if (jobs == null)
             {
                 return NotFound(new { message = "Usuario não encontrado" });
             }
             try
             {
-                _context.Companies.Remove(companies);
+                _context.Jobs.Remove(jobs);
                 await _context.SaveChangesAsync();
-                return Ok(new { message = $"Usuário {companies.Id} removido com sucesso" });
+                return Ok(new { message = $"Usuário {jobs.Id} removido com sucesso" });
             }
             catch
             {
@@ -158,3 +157,4 @@ namespace TaskManagementAspCore.Controlllers
         #endregion
     }
 }
+

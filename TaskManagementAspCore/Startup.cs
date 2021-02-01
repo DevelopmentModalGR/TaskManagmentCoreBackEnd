@@ -105,6 +105,9 @@ namespace TaskManagementAspCore
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -112,6 +115,12 @@ namespace TaskManagementAspCore
                     pattern: "{controller}/{action=Index}/{id?}");
             });
 
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
+           
             app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
