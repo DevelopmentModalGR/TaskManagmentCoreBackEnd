@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TaskManagementAspCore.Data;
 using TaskManagementAspCore.Models;
+
 namespace TaskManagementAspCore.Controlllers
 {
     [Route("jobs")]
@@ -14,9 +15,9 @@ namespace TaskManagementAspCore.Controlllers
     {
         #region GETTERS
 
-        /*
+
         //RETORNA TODAS COMPANHIAS
-        */
+
         [HttpGet]
         [Route("")]
         //[Authorize(Roles = "manager")]
@@ -30,9 +31,9 @@ namespace TaskManagementAspCore.Controlllers
             return jobs;
         }
 
-        /*
+
         //RETORNA TODAS COMPANHIAS POR ID
-        */
+
         [HttpGet]
         [Route("{id:int}")]
         //[Authorize(Roles = "manager")]
@@ -48,11 +49,11 @@ namespace TaskManagementAspCore.Controlllers
             return jobs;
         }
 
-        /*
+
         //RETORNA TODAS COMPANHIAS POR NOME
-        */
+
         [HttpGet]
-        [Route("{name: string}")]
+        [Route("{name}")]
         //[Authorize(Roles = "manager")]
         public async Task<ActionResult<List<Jobs>>> GetAction(
            [FromServices] DataContext context, string name)

@@ -17,9 +17,9 @@ namespace TaskManagementAspCore.Controllers
     {
         #region GETTERS
 
-        /*
+
         //RETORNA TODOS USUARIOS
-        */
+
         [HttpGet]
         [Route("")]
         [AllowAnonymous]
@@ -36,9 +36,9 @@ namespace TaskManagementAspCore.Controllers
             return users;
         }
 
-        /*
-       //RETORNA TODOS USUARIOS, INCLUINDO NOME DE COMPANIAS, DEPARTAMENTOS E JOBS
-       */
+
+        //RETORNA TODOS USUARIOS, INCLUINDO NOME DE COMPANIAS, DEPARTAMENTOS E JOBS
+
         [HttpGet]
         [Route("allinfo")]
         //[Authorize(Roles = "admin")]
@@ -56,9 +56,9 @@ namespace TaskManagementAspCore.Controllers
             return users;
         }
 
-        /*
+
         //RETORNA O USUARIO PELO ID PASSADO COMO PARAMETRO COM TODAS AS INFORMAÇÕES VINCULADAS
-        */
+
         [HttpGet]
         [Route("{id:int}")]
         //[Authorize(Roles = "manager")]
@@ -76,11 +76,11 @@ namespace TaskManagementAspCore.Controllers
             .ToListAsync();
             return users;
         }
-        /*
+
         //RETORNA O USUARIO PELO EMAIL INFORMADO
-        */
+
         [HttpGet]
-        [Route("{email: string}")]
+        [Route("{email}")]
         //[Authorize(Roles = "manager")]
         public async Task<ActionResult<List<User>>> GetAction(
            [FromServices] DataContext context, string email)
@@ -98,7 +98,7 @@ namespace TaskManagementAspCore.Controllers
 
         #region VerificarAutenticidade
 
-        /*[HttpGet]
+        [HttpGet]
         [Route("anonimo")]
         [AllowAnonymous]
         public string Anonimo() => "Anonimo";
@@ -116,15 +116,15 @@ namespace TaskManagementAspCore.Controllers
         [HttpGet]
         [Route("gerente")]
         [Authorize(Roles = "manager")]
-        public string Gerente() => "Gerente";*/
+        public string Gerente() => "Gerente";
 
         #endregion
 
         #region POSTERS
 
-        /*
+
         //INSERE UM USUARIO
-        */
+
         [HttpPost]
         [Route("newuser")]
         [AllowAnonymous]
@@ -139,29 +139,30 @@ namespace TaskManagementAspCore.Controllers
             if (model.Company == null)
                 return BadRequest(new { message = "Insira uma Companhia" });
 
-            /*try
-            {*/
-            //Força o usuário a ser sempre "funcionário"
-            //model.Role = "employee";
+            try
+            {
+                //Força o usuário a ser sempre "funcionário"
+                //model.Role = "employee";
 
-            context.Users.Add(model);
-            model.Departments = null;
-            model.Jobs = null;
-            await context.SaveChangesAsync();
+                context.Users.Add(model);
+                model.Departments = null;
+                model.Jobs = null;
+                await context.SaveChangesAsync();
 
-            //Esconde a senha
-            //model.Password = "";
-            return model;
+                //Esconde a senha
+                //model.Password = "";
+                return model;
+            }
 
-            /*catch (Exception)
+            catch (Exception)
             {
                 return BadRequest(new { message = "Não foi possível criar o usuário" });
-            }*/
+            }
         }
 
-        /*
+
         //LOGAR USUARIO E RETORNAR TOKEN DE AUTENTICIDADE
-        */
+
         [HttpPost]
         [Route("login")]
         //[Authorize(Roles = "manager")]
@@ -188,9 +189,9 @@ namespace TaskManagementAspCore.Controllers
         #endregion
 
         #region PUTTERS
-        /*
+
         //PUTTERS
-        */
+
         [HttpPut]
         [Route("{id:int}")]
         //[Authorize(Roles = "manager")]
@@ -211,9 +212,9 @@ namespace TaskManagementAspCore.Controllers
 
         #region DELETTERS
 
-        /*
+
         //DELETTERS
-        */
+
         [HttpDelete]
         [Route("{id:int}")]
         // [Authorize(Roles = "manager")]

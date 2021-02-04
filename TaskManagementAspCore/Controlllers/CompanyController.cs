@@ -10,14 +10,14 @@ using TaskManagementAspCore.Models;
 
 namespace TaskManagementAspCore.Controlllers
 {
-    [Route("companies")]
+    [Route("company")]
     public class CompanyController : Controller
     {
         #region GETTERS
 
-        /*
+
         //RETORNA TODAS COMPANHIAS
-        */
+
         [HttpGet]
         [Route("")]
         //[Authorize(Roles = "manager")]
@@ -31,9 +31,9 @@ namespace TaskManagementAspCore.Controlllers
             return companies;
         }
 
-        /*
+
         //RETORNA TODAS COMPANHIAS POR ID
-        */
+
         [HttpGet]
         [Route("{id:int}")]
         //[Authorize(Roles = "manager")]
@@ -49,11 +49,11 @@ namespace TaskManagementAspCore.Controlllers
             return companies;
         }
 
-        /*
+
         //RETORNA TODAS COMPANHIAS POR NOME
-        */
+
         [HttpGet]
-        [Route("{name: string}")]
+        [Route("{name}")]
         //[Authorize(Roles = "manager")]
         public async Task<ActionResult<List<Company>>> GetAction(
            [FromServices] DataContext context, string name)

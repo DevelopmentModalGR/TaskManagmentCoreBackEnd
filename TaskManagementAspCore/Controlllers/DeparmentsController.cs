@@ -12,13 +12,13 @@ using TaskManagementAspCore.Data;
 
 namespace TaskManagementAspCore.Controllers
 {
-    [Route("departments")]
+    [Route("department")]
     public class DepartmentController : Controller
     {
         #region GETTERS
-        /*
+
         //GETTERS
-        */
+
         [HttpGet]
         [Route("")]
         //[Authorize(Roles = "manager")]
@@ -69,9 +69,9 @@ namespace TaskManagementAspCore.Controllers
         #endregion
 
         #region POSTERS
-        /*
+
         //POSTERS
-        */
+
         [HttpPost]
         [Route("")]
         [AllowAnonymous]
@@ -105,9 +105,9 @@ namespace TaskManagementAspCore.Controllers
 
         #region PUTTERS
 
-        /*
+
         //PUTTERS
-        */
+
         [HttpPut]
         [Route("{id:int}")]
         // [Authorize(Roles = "manager")]
@@ -134,9 +134,9 @@ namespace TaskManagementAspCore.Controllers
 
         #region DELETTERS
 
-        /*
+
         //DELETTERS
-        */
+
         [HttpDelete]
         [Route("{id:int}")]
         // [Authorize(Roles = "manager")]
