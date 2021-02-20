@@ -41,7 +41,7 @@ namespace TaskManagementAspCore.Controllers
 
         [HttpGet]
         [Route("allinfo")]
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<List<User>>> GetUsersAllInfo(
            [FromServices] DataContext context,
            [FromBody] User model)
@@ -61,7 +61,7 @@ namespace TaskManagementAspCore.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
-        //[Authorize(Roles = "manager")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<List<User>>> GetUserById(
            int id, [FromServices] DataContext context,
            [FromBody] User model)
