@@ -28,14 +28,16 @@ namespace TaskManagementAspCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
+            
+
             services.AddResponseCompression(options =>
             {
                 options.Providers.Add<GzipCompressionProvider>();
                 options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "application/json" });
             });
             //services.AddResponseCaching();
-            services.AddControllers();
+          
+
             var key = Encoding.ASCII.GetBytes(Settings.Secret);
             //ADICIONANDO REGRA DE AUTENTICAÇÃO
             services.AddAuthentication(x =>
@@ -60,7 +62,6 @@ namespace TaskManagementAspCore
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-            services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -73,7 +74,19 @@ namespace TaskManagementAspCore
                 c.SwaggerDoc("V1", new OpenApiInfo { Title = "Shop Api", Version = "v1" });
             });
 
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200")
+                                                  .AllowAnyOrigin()
+                                                  .AllowAnyHeader()
+                                                  .AllowAnyMethod();
+                    });
+            });
 
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -113,13 +126,7 @@ namespace TaskManagementAspCore
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
-            });
-
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
-
+            });    
            
             app.UseSpa(spa =>
             {
@@ -134,7 +141,7 @@ namespace TaskManagementAspCore
                 }
             });
 
-
+            app.UseCors("EnableCORS");
         }
     }
 }

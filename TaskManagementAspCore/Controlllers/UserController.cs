@@ -16,35 +16,32 @@ namespace TaskManagementAspCore.Controllers
     public class UserController : Controller
     {
         #region GETTERS
+        private readonly DataContext context;
 
+        public UserController(DataContext context)
+        {
+            this.context = context;
+        }
 
         //RETORNA TODOS USUARIOS
 
-        [HttpGet]
-        [Route("")]
+        [HttpGet("")]
         [AllowAnonymous]
         //[Authorize(Roles = "employee")]
-        public async Task<ActionResult<List<User>>> GetUsers(
-           [FromServices] DataContext context,
-           [FromBody] User model)
+        public async Task<ActionResult<List<User>>> GetUsers()
         {
             var users = await context
             .Users
             .Include(x => x.Company)
             .AsNoTracking()
             .ToListAsync();
-            return users;
+            return Ok(users);
         }
 
-
         //RETORNA TODOS USUARIOS, INCLUINDO NOME DE COMPANIAS, DEPARTAMENTOS E JOBS
-
-        [HttpGet]
-        [Route("allinfo")]
+        [HttpGet("allinfo")]
         [Authorize(Roles = "admin")]
-        public async Task<ActionResult<List<User>>> GetUsersAllInfo(
-           [FromServices] DataContext context,
-           [FromBody] User model)
+        public async Task<ActionResult<List<User>>> GetUsersAllInfo()
         {
             var users = await context
             .Users
@@ -53,18 +50,14 @@ namespace TaskManagementAspCore.Controllers
             .Include(x => x.Jobs)
             .AsNoTracking()
             .ToListAsync();
-            return users;
+            return Ok(users);
         }
 
 
         //RETORNA O USUARIO PELO ID PASSADO COMO PARAMETRO COM TODAS AS INFORMAÇÕES VINCULADAS
-
-        [HttpGet]
-        [Route("{id:int}")]
+        [HttpGet("{id:int}")]
         [Authorize(Roles = "admin")]
-        public async Task<ActionResult<List<User>>> GetUserById(
-           int id, [FromServices] DataContext context,
-           [FromBody] User model)
+        public async Task<ActionResult<List<User>>> GetUserById(int id)
         {
             var users = await context
             .Users
@@ -74,16 +67,13 @@ namespace TaskManagementAspCore.Controllers
             .Where(x => x.Id == id)
             .AsNoTracking()
             .ToListAsync();
-            return users;
+            return Ok(users);
         }
 
         //RETORNA O USUARIO PELO EMAIL INFORMADO
-
-        [HttpGet]
-        [Route("{email}")]
+        [HttpGet("{email}")]
         //[Authorize(Roles = "manager")]
-        public async Task<ActionResult<List<User>>> GetAction(
-           [FromServices] DataContext context, string email)
+        public async Task<ActionResult<List<User>>> GetAction(string email)
         {
             var user = await context
             .Users
@@ -91,30 +81,26 @@ namespace TaskManagementAspCore.Controllers
             .AsNoTracking()
             .Where(x => x.Email == email)
             .ToListAsync();
-            return user;
+            return Ok(user);
         }
 
         #endregion
 
-        #region VerificarAutenticidade
+        #region VERIFICAR AUTENTICIDADE
 
-        [HttpGet]
-        [Route("anonimo")]
+        [HttpGet("anonimo")]
         [AllowAnonymous]
         public string Anonimo() => "Anonimo";
 
-        [HttpGet]
-        [Route("autenticado")]
+        [HttpGet("autenticado")]
         [Authorize]
         public string Autenticado() => "Autenticado";
 
-        [HttpGet]
-        [Route("funcionario")]
+        [HttpGet("funcionario")]
         [Authorize(Roles = "employee")]
         public string Funcionario() => "Funcionario";
 
-        [HttpGet]
-        [Route("gerente")]
+        [HttpGet("gerente")]
         [Authorize(Roles = "manager")]
         public string Gerente() => "Gerente";
 
@@ -125,8 +111,7 @@ namespace TaskManagementAspCore.Controllers
 
         //INSERE UM USUARIO
 
-        [HttpPost]
-        [Route("newuser")]
+        [HttpPost("newuser")]
         [AllowAnonymous]
         //[Authorize(Roles = "manager")]
         public async Task<ActionResult<User>> PostUser(
@@ -163,12 +148,10 @@ namespace TaskManagementAspCore.Controllers
 
         //LOGAR USUARIO E RETORNAR TOKEN DE AUTENTICIDADE
 
-        [HttpPost]
-        [Route("login")]
+        [HttpPost("login")]
         //[Authorize(Roles = "manager")]
         [AllowAnonymous]
         public async Task<ActionResult<dynamic>> Authenticate(
-        [FromServices] DataContext context,
         [FromBody] User model)
         {
             var user = await context.Users
@@ -192,8 +175,7 @@ namespace TaskManagementAspCore.Controllers
 
         //PUTTERS
 
-        [HttpPut]
-        [Route("{id:int}")]
+        [HttpPut("{id:int}")]
         //[Authorize(Roles = "manager")]
         public async Task<ActionResult<User>> AlterUser(
                     [FromServices] DataContext context,
@@ -214,9 +196,7 @@ namespace TaskManagementAspCore.Controllers
 
 
         //DELETTERS
-
-        [HttpDelete]
-        [Route("{id:int}")]
+        [HttpDelete("{id:int}")]
         // [Authorize(Roles = "manager")]
         public async Task<ActionResult<List<User>>> Delete(
             int id,
@@ -237,7 +217,6 @@ namespace TaskManagementAspCore.Controllers
             {
                 return BadRequest(new { message = "Não foi possivel remover a categoria" });
             }
-
         }
         #endregion
     }
