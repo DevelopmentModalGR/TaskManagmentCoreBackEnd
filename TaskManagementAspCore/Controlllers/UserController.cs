@@ -9,6 +9,7 @@ using System.Linq;
 using TaskManagementAspCore.Services;
 using TaskManagementAspCore.Models;
 using TaskManagementAspCore.Data;
+using Microsoft.AspNetCore.Cors;
 
 namespace TaskManagementAspCore.Controllers
 {
@@ -149,6 +150,7 @@ namespace TaskManagementAspCore.Controllers
         //LOGAR USUARIO E RETORNAR TOKEN DE AUTENTICIDADE
 
         [HttpPost("login")]
+        [EnableCors("EnableCORS")]
         //[Authorize(Roles = "manager")]
         [AllowAnonymous]
         public async Task<ActionResult<dynamic>> Authenticate(

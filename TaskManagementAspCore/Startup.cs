@@ -28,7 +28,7 @@ namespace TaskManagementAspCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+           /* services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_2);*/
 
             services.AddResponseCompression(options =>
             {
@@ -74,16 +74,17 @@ namespace TaskManagementAspCore
                 c.SwaggerDoc("V1", new OpenApiInfo { Title = "Shop Api", Version = "v1" });
             });
 
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
+
             services.AddCors(options =>
             {
-                options.AddDefaultPolicy(
-                    builder =>
-                    {
-                        builder.WithOrigins("http://localhost:4200")
-                                                  .AllowAnyOrigin()
-                                                  .AllowAnyHeader()
-                                                  .AllowAnyMethod();
-                    });
+            options.AddPolicy("EnableCORS", builder => builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
             });
 
             services.AddControllers();
@@ -109,7 +110,7 @@ namespace TaskManagementAspCore
                 c.SwaggerEndpoint("/swagger/V1/swagger.json", "TaskManagment API V1");
             });
 
-            app.UseHttpsRedirection();
+            
             app.UseStaticFiles();
             if (!env.IsDevelopment())
             {
@@ -120,6 +121,8 @@ namespace TaskManagementAspCore
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseCors("EnableCORS");
 
             app.UseEndpoints(endpoints =>
             {
@@ -141,7 +144,12 @@ namespace TaskManagementAspCore
                 }
             });
 
-            app.UseCors("EnableCORS");
+           
+
+            
+            app.UseHttpsRedirection();
         }
     }
 }
+
+
