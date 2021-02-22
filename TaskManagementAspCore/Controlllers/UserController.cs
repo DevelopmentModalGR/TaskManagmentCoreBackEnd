@@ -122,8 +122,8 @@ namespace TaskManagementAspCore.Controllers
             //Verifica se os dados são válidos
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            if (model.Company == null)
-                return BadRequest(new { message = "Insira uma Companhia" });
+        /*    if (model.Company == null)
+                return BadRequest(new { message = "Insira uma Companhia" });*/
 
             try
             {
@@ -157,6 +157,9 @@ namespace TaskManagementAspCore.Controllers
         [FromBody] User model)
         {
             var user = await context.Users
+            .Include(x => x.Company)
+            .Include(x => x.Departments)
+            .Include(x => x.Jobs)
             .AsNoTracking()
             .Where(x => x.Email == model.Email && x.Password == model.Password)
             .FirstOrDefaultAsync();

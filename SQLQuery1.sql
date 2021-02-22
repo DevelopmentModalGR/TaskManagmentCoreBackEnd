@@ -16,7 +16,15 @@ select * from dbo.Users
 select * from dbo.Companies
 
 
+
+select * from dbo.Users
+
+
 DELETE FROM dbo.Users WHERE Email = 'renato@123.com'
+
+DELETE FROM dbo.Users WHERE Name = 'Renato Santos123'
+
+DELETE FROM dbo.Users WHERE Email = 'PegaNoMeuPau@123.com'
 
 Delete from dbo.companies where id = 3
 
@@ -59,7 +67,7 @@ VALUES ('Renato Santos', 'renato@123.com','0001-01-01T00:00:00', 1,1, '123456', 
 INSERT INTO dbo.Users(name, Email, SignUpDate, IsActive, IsAdmin, Password,Role, CompanyId)
 VALUES ('Andre Ribeiro', 'AndrezinhoReiDelas_2002@123.com','0001-01-01T00:00:00', 1,0, '123456', 'manager',2)
 INSERT INTO dbo.Users(name, Email, SignUpDate, IsActive, IsAdmin, Password,Role, CompanyId)
-VALUES ('Angelo Brabo', 'Agenlao@123.com','0001-01-01T00:00:00', 1,0, '123456', 'manager',3)
+VALUES ('Angelo Brabo', 'Angelao@123.com','0001-01-01T00:00:00', 1,0, '123456', 'manager',3)
 
 INSERT INTO DepartmentUser(DepartmentsId, UsersId)
 Values(1,4)
