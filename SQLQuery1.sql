@@ -1,4 +1,4 @@
-use [TaskManagmentCore-2]
+use [TaskManagmentCore]
 
 select * from dbo.CheckOutProcesses
 
@@ -22,7 +22,7 @@ select * from dbo.Users
 
 DELETE FROM dbo.Users WHERE Email = 'renato@123.com'
 
-DELETE FROM dbo.Users WHERE Name = 'Renato Santos123'
+DELETE FROM dbo.Users WHERE Name = 'teste'
 
 DELETE FROM dbo.Users WHERE Email = 'PegaNoMeuPau@123.com'
 
@@ -70,7 +70,7 @@ INSERT INTO dbo.Users(name, Email, SignUpDate, IsActive, IsAdmin, Password,Role,
 VALUES ('Angelo Brabo', 'Angelao@123.com','0001-01-01T00:00:00', 1,0, '123456', 'manager',3)
 
 INSERT INTO DepartmentUser(DepartmentsId, UsersId)
-Values(1,4)
+Values(1,1)
 
 INSERT INTO DepartmentUser(DepartmentsId, UsersId)
-Values(4,4)
+Values(4,1)
