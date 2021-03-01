@@ -1,0 +1,237 @@
+{
+	"info": {
+		"_postman_id": "d4ba3122-8d80-417f-95e6-9af7cd2bf476",
+		"name": "TaskManagmentProject",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get user without all info",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Renato Santos\",\r\n    \"email\": \"renato@123.com\",\r\n    \"isActive\": true,\r\n    \"isAdmin\": true,\r\n    \"password\": \"123456789\",\r\n    \"role\": \"Admin\",\r\n    \"company\" : {\"name\" : \"Litoral TeleBosta\"},\r\n    \"id\" :7\r\n}\r\n    ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/users",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"users"
+					]
+				},
+				"description": "return all users with completeinfo"
+			},
+			"response": []
+		},
+		{
+			"name": "get user by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1hbmFnZXIiLCJyb2xlIjoiYWRtaW4iLCJuYmYiOjE2MTQxNzI5MzgsImV4cCI6MTYxNDE4MDEzOCwiaWF0IjoxNjE0MTcyOTM4fQ.AKzP1V3dAIQqpmD5LCQoPuTDMHjyMD9oGTVQTf-JG1A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Renato Santos\",\r\n    \"email\": \"renato@123.com\",\r\n    \"isActive\": true,\r\n    \"isAdmin\": true,\r\n    \"password\": \"123456789\",\r\n    \"role\": \"Admin\",\r\n    \"company\" : {\"name\" : \"Litoral TeleBosta\"},\r\n    \"id\" :7\r\n}\r\n    ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/users/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"users",
+						"1"
+					]
+				},
+				"description": "return all users with completeinfo"
+			},
+			"response": []
+		},
+		{
+			"name": "update user data",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "   {\r\n        \"name\": \"teste\",\r\n        \"email\": \"teste@123.com\",\r\n        \"signUpDate\": \"0001-01-01T00:00:00\",\r\n        \"isActive\": true,\r\n        \"isAdmin\": true,\r\n        \"password\": \"123456\",\r\n        \"role\": \"manager\",\r\n        \"companyId\": 2,\r\n        \"departments\": [],\r\n        \"id\": 1003\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/users/updateuser",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"users",
+						"updateuser"
+					]
+				},
+				"description": "update the user info, insert the id on the url above"
+			},
+			"response": []
+		},
+		{
+			"name": "insert a user in database",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IlJlbmF0byBTYW50b3MiLCJyb2xlIjoibWFuYWdlciIsIm5iZiI6MTYxMTg0MDU2NywiZXhwIjoxNjExODQ3NzY3LCJpYXQiOjE2MTE4NDA1Njd9.fnUJO_PcWd2-INLdd3Lel0BWBGhiSg3ttEGrK-olTxQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": \"teste\",\r\n        \"email\": \"renato@123.com\",\r\n        \"isActive\": true,\r\n        \"isAdmin\": true,\r\n        \"password\": \"123456\",\r\n        \"role\": \"manager\",\r\n        \"companyId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/users/newuser",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"users",
+						"newuser"
+					]
+				},
+				"description": "post a test using a user model"
+			},
+			"response": []
+		},
+		{
+			"name": "delete method, by id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n    ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/users/1003",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"users",
+						"1003"
+					]
+				},
+				"description": "delete user model, insert the id on the url above"
+			},
+			"response": []
+		},
+		{
+			"name": "login method",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"email\" : \"OBrabo@123.com\",\r\n        \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/users/login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"users",
+						"login"
+					]
+				},
+				"description": "login users to model\r\n"
+			},
+			"response": []
+		}
+	]
+}

@@ -3,6 +3,8 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+connect.txt
+
 # User-specific files
 *.suo
 *.user
@@ -116,6 +118,7 @@ _TeamCity*
 # Visual Studio code coverage results
 *.coverage
 *.coveragexml
+
 
 # NCrunch
 _NCrunch_*

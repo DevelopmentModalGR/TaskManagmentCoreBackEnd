@@ -48,6 +48,7 @@ namespace TaskManagementAspCore.Controllers
             .Users
             .Include(x => x.Company)
             .Include(x => x.Departments)
+            .ThenInclude(x => x.CheckoutProcesses)
             .Include(x => x.Jobs)
             .AsNoTracking()
             .ToListAsync();
@@ -129,8 +130,8 @@ namespace TaskManagementAspCore.Controllers
             {
                 //Força o usuário a ser sempre "funcionário"
                 //model.Role = "employee";
-
-                context.Users.Add(model);
+                model.SignUpDate = DateTime.Now;
+                context.Users.Add(model);                
                 model.Departments = null;
                 model.Jobs = null;
                 await context.SaveChangesAsync();
@@ -159,6 +160,7 @@ namespace TaskManagementAspCore.Controllers
             var user = await context.Users
             .Include(x => x.Company)
             .Include(x => x.Departments)
+            .ThenInclude(x => x.CheckoutProcesses)
             .Include(x => x.Jobs)
             .AsNoTracking()
             .Where(x => x.Email == model.Email && x.Password == model.Password)
@@ -180,11 +182,11 @@ namespace TaskManagementAspCore.Controllers
 
         //PUTTERS
 
-        [HttpPut("{id:int}")]
+        [HttpPut("updateuser")]
         //[Authorize(Roles = "manager")]
         public async Task<ActionResult<User>> AlterUser(
                     [FromServices] DataContext context,
-                    [FromBody] User model, int id)
+                    [FromBody] User model)
         {
             //Verifica se os dados são válidos
             if (!ModelState.IsValid)
