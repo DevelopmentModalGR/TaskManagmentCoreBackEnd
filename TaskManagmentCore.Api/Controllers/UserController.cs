@@ -39,6 +39,19 @@ namespace TaskManagementAspCore.Controllers
             return Ok(users);
         }
 
+        [HttpGet("names")]
+        [AllowAnonymous]
+        //[Authorize(Roles = "employee")]
+        public async Task<ActionResult<List<User>>> GetUsersNames()
+        {
+            var users = await context
+            .Users
+            .Select(x => x.Name)
+            .AsNoTracking()
+            .ToListAsync();
+            return Ok(users);
+        }
+
         //RETORNA TODOS USUARIOS, INCLUINDO NOME DE COMPANIAS, DEPARTAMENTOS E JOBS
         [HttpGet("allinfo")]
         [Authorize(Roles = "admin")]
@@ -58,7 +71,7 @@ namespace TaskManagementAspCore.Controllers
 
         //RETORNA O USUARIO PELO ID PASSADO COMO PARAMETRO COM TODAS AS INFORMAÇÕES VINCULADAS
         [HttpGet("{id:int}")]
-        [Authorize(Roles = "admin")]
+      /*  [Authorize(Roles = "admin")]*/
         public async Task<ActionResult<List<User>>> GetUserById(int id)
         {
             var users = await context
@@ -68,7 +81,7 @@ namespace TaskManagementAspCore.Controllers
             .Include(x => x.Jobs)
             .Where(x => x.Id == id)
             .AsNoTracking()
-            .ToListAsync();
+            .FirstOrDefaultAsync();
             return Ok(users);
         }
 

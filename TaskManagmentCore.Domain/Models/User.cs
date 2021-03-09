@@ -11,7 +11,7 @@ namespace TaskManagementCore.Models
         public User()
         {
             this.Jobs = new HashSet<Jobs>();
-            this.Departments = new HashSet<Department>();
+            this.Departments = new HashSet<Department>(); 
         }
         public User(string name, string email, DateTime signUpDate, bool isActive, List<Department> departments, Company company)
         {

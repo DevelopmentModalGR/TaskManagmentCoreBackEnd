@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Canducci.Pagination; //pacote de paginação
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +11,7 @@ using TaskManagementCore.Models;
 
 namespace TaskManagementAspCore.Controlllers
 {
-    [Route("Checkout")]
+    [Route("checkout")]
     public class CheckoutProcessController : Controller
     {
         #region GETTERS
@@ -29,6 +30,23 @@ namespace TaskManagementAspCore.Controlllers
             .AsNoTracking()
             .ToListAsync();
             return jobs;
+        }
+
+        //RETORNAR COM PAGINAÇÃO
+        [HttpGet("page/{page?}")]
+        public async Task<IActionResult> GetCheckoutPaginated(
+             [FromServices] DataContext context, int? page)
+        {
+            page ??= 1;
+            if (page <= 0) page = 1;
+
+            var result = await context
+               .CheckOutProcesses
+               .AsNoTracking()
+               .OrderBy(c => c.Id) //.ToPaginatedAsync(1, page.Value);
+               .ToPaginatedRestAsync(1, page.Value);
+
+            return Ok(result);
         }
 
 

@@ -6,7 +6,50 @@
 	},
 	"item": [
 		{
-			"name": "get user without all info",
+			"name": "get department without all info",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Renato Santos\",\r\n    \"email\": \"renato@123.com\",\r\n    \"isActive\": true,\r\n    \"isAdmin\": true,\r\n    \"password\": \"123456789\",\r\n    \"role\": \"Admin\",\r\n    \"company\" : {\"name\" : \"Litoral TeleBosta\"},\r\n    \"id\" :7\r\n}\r\n    ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/department/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"department",
+						""
+					]
+				},
+				"description": "return all users with completeinfo"
+			},
+			"response": []
+		},
+		{
+			"name": "get all jobs",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -41,6 +84,137 @@
 					"port": "5001",
 					"path": [
 						"users"
+					]
+				},
+				"description": "return all users with completeinfo"
+			},
+			"response": []
+		},
+		{
+			"name": "get user with all info",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1hbmFnZXIiLCJyb2xlIjoiYWRtaW4iLCJuYmYiOjE2MTQ1NTkxNDksImV4cCI6MTYxNDU2NjM0OSwiaWF0IjoxNjE0NTU5MTQ5fQ.GHDo1aAMTfCE-TzUad8_9DYzE26rarMU4FPd5rftGpE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Renato Santos\",\r\n    \"email\": \"renato@123.com\",\r\n    \"isActive\": true,\r\n    \"isAdmin\": true,\r\n    \"password\": \"123456789\",\r\n    \"role\": \"Admin\",\r\n    \"company\" : {\"name\" : \"Litoral TeleBosta\"},\r\n    \"id\" :7\r\n}\r\n    ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/users/allinfo",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"users",
+						"allinfo"
+					]
+				},
+				"description": "return all users with completeinfo"
+			},
+			"response": []
+		},
+		{
+			"name": "get jobs paged",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1hbmFnZXIiLCJyb2xlIjoiYWRtaW4iLCJuYmYiOjE2MTQ1NTkxNDksImV4cCI6MTYxNDU2NjM0OSwiaWF0IjoxNjE0NTU5MTQ5fQ.GHDo1aAMTfCE-TzUad8_9DYzE26rarMU4FPd5rftGpE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Renato Santos\",\r\n    \"email\": \"renato@123.com\",\r\n    \"isActive\": true,\r\n    \"isAdmin\": true,\r\n    \"password\": \"123456789\",\r\n    \"role\": \"Admin\",\r\n    \"company\" : {\"name\" : \"Litoral TeleBosta\"},\r\n    \"id\" :7\r\n}\r\n    ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/jobs/page/6",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"jobs",
+						"page",
+						"6"
+					]
+				},
+				"description": "return all users with completeinfo"
+			},
+			"response": []
+		},
+		{
+			"name": "get chechout paged",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1hbmFnZXIiLCJyb2xlIjoiYWRtaW4iLCJuYmYiOjE2MTQ1NTkxNDksImV4cCI6MTYxNDU2NjM0OSwiaWF0IjoxNjE0NTU5MTQ5fQ.GHDo1aAMTfCE-TzUad8_9DYzE26rarMU4FPd5rftGpE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Renato Santos\",\r\n    \"email\": \"renato@123.com\",\r\n    \"isActive\": true,\r\n    \"isAdmin\": true,\r\n    \"password\": \"123456789\",\r\n    \"role\": \"Admin\",\r\n    \"company\" : {\"name\" : \"Litoral TeleBosta\"},\r\n    \"id\" :7\r\n}\r\n    ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/checkout/page/6",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"checkout",
+						"page",
+						"6"
 					]
 				},
 				"description": "return all users with completeinfo"
@@ -84,6 +258,48 @@
 					"path": [
 						"users",
 						"1"
+					]
+				},
+				"description": "return all users with completeinfo"
+			},
+			"response": []
+		},
+		{
+			"name": "get Company",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1hbmFnZXIiLCJyb2xlIjoiYWRtaW4iLCJuYmYiOjE2MTQxNzI5MzgsImV4cCI6MTYxNDE4MDEzOCwiaWF0IjoxNjE0MTcyOTM4fQ.AKzP1V3dAIQqpmD5LCQoPuTDMHjyMD9oGTVQTf-JG1A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Renato Santos\",\r\n    \"email\": \"renato@123.com\",\r\n    \"isActive\": true,\r\n    \"isAdmin\": true,\r\n    \"password\": \"123456789\",\r\n    \"role\": \"Admin\",\r\n    \"company\" : {\"name\" : \"Litoral TeleBosta\"},\r\n    \"id\" :7\r\n}\r\n    ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/company",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"company"
 					]
 				},
 				"description": "return all users with completeinfo"
@@ -201,7 +417,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1hbmFnZXIiLCJyb2xlIjoiYWRtaW4iLCJuYmYiOjE2MTQ1NTkxNDksImV4cCI6MTYxNDU2NjM0OSwiaWF0IjoxNjE0NTU5MTQ5fQ.GHDo1aAMTfCE-TzUad8_9DYzE26rarMU4FPd5rftGpE",
 							"type": "string"
 						}
 					]

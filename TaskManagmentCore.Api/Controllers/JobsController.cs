@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TaskManagementCore.Api;
 using TaskManagementCore.Models;
+using Canducci.Pagination;
 
 namespace TaskManagementAspCore.Controlllers
 {
@@ -21,7 +22,7 @@ namespace TaskManagementAspCore.Controlllers
         [HttpGet]
         [Route("")]
         //[Authorize(Roles = "manager")]
-        public async Task<ActionResult<List<Jobs>>> GetCompany(
+        public async Task<ActionResult<List<Jobs>>> GetJob(
            [FromServices] DataContext context)
         {
             var jobs = await context
@@ -32,12 +33,12 @@ namespace TaskManagementAspCore.Controlllers
         }
 
 
-        //RETORNA TODAS COMPANHIAS POR ID
+        //RETORNA TODOS JOBS POR ID
 
         [HttpGet]
         [Route("{id:int}")]
         //[Authorize(Roles = "manager")]
-        public async Task<ActionResult<List<Jobs>>> GetCompanybyId(
+        public async Task<ActionResult<List<Jobs>>> GetJobbyId(
            [FromServices] DataContext context, int id)
         {
             var jobs = await context
@@ -49,9 +50,25 @@ namespace TaskManagementAspCore.Controlllers
             return jobs;
         }
 
+        //RETORNAR COM PAGINAÇÃO
+        [HttpGet("page/{page?}")]
+        public async Task<IActionResult> GetJobPaginated(
+             [FromServices] DataContext context, int? page)
+        {
+            page ??= 1;
+            if (page <= 0) page = 1;
+
+            var result = await context
+               .Jobs
+               .AsNoTracking()
+               .OrderBy(c => c.Id) //.ToPaginatedAsync(1, page.Value);
+               .ToPaginatedRestAsync(1, page.Value);
+                    
+            return Ok(result);
+        }
+
 
         //RETORNA TODAS COMPANHIAS POR NOME
-
         [HttpGet]
         [Route("{name}")]
         //[Authorize(Roles = "manager")]
@@ -66,6 +83,7 @@ namespace TaskManagementAspCore.Controlllers
             .ToListAsync();
             return jobs;
         }
+
         #endregion
 
         #region POSTERS
