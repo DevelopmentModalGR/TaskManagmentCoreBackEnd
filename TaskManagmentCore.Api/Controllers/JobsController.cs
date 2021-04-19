@@ -51,9 +51,9 @@ namespace TaskManagementAspCore.Controlllers
         }
 
         //RETORNAR COM PAGINAÇÃO
-        [HttpGet("page/{page?}")]
+        [HttpGet("page/{page?}/{itens?}")]
         public async Task<IActionResult> GetJobPaginated(
-             [FromServices] DataContext context, int? page)
+             [FromServices] DataContext context, int? page, int? itens)
         {
             page ??= 1;
             if (page <= 0) page = 1;
@@ -62,7 +62,7 @@ namespace TaskManagementAspCore.Controlllers
                .Jobs
                .AsNoTracking()
                .OrderBy(c => c.Id) //.ToPaginatedAsync(1, page.Value);
-               .ToPaginatedRestAsync(1, page.Value);
+               .ToPaginatedRestAsync(page.Value, itens.Value);
                     
             return Ok(result);
         }
