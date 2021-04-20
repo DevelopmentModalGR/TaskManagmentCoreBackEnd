@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using TaskManagementCore.Api;
 using TaskManagementCore.Models;
 using Canducci.Pagination;
+using Microsoft.AspNetCore.Cors;
 
 namespace TaskManagementAspCore.Controlllers
 {
@@ -52,6 +53,7 @@ namespace TaskManagementAspCore.Controlllers
 
         //RETORNAR COM PAGINAÇÃO
         [HttpGet("page/{page?}/{itens?}")]
+        [EnableCors("EnableCORS")]
         public async Task<IActionResult> GetJobPaginated(
              [FromServices] DataContext context, int? page, int? itens)
         {

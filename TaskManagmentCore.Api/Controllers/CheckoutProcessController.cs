@@ -1,5 +1,6 @@
 ﻿using Canducci.Pagination; //pacote de paginação
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -34,6 +35,7 @@ namespace TaskManagementAspCore.Controlllers
 
         //RETORNAR COM PAGINAÇÃO
         [HttpGet("page/{page?}/{itens?}")]
+        [EnableCors("EnableCORS")]
         public async Task<IActionResult> GetCheckoutPaginated(
              [FromServices] DataContext context, int? page, int? itens)
         {
@@ -42,6 +44,27 @@ namespace TaskManagementAspCore.Controlllers
 
             var result = await context
                .CheckOutProcesses
+               .Include(x => x.Jobs)
+               .AsNoTracking()
+               .OrderBy(c => c.Id) //.ToPaginatedAsync(1, page.Value);
+               .ToPaginatedRestAsync(page.Value, itens.Value);
+
+            return Ok(result);
+        }
+
+        //RETORNAR JOBS POR CHECKLIST
+        [HttpGet]
+        [Route("jobs/{checkId:int}/{page?}/{itens?}")]
+        public async Task<IActionResult> GetJobPaginatedByChecklistId(
+             [FromServices] DataContext context, int checkId,int? page, int? itens)
+        {
+            page ??= 1;
+            if (page <= 0) page = 1;
+
+            var result = await context
+               .CheckOutProcesses
+               .Include(x => x.Jobs)
+               .Where(x => x.Id == checkId)
                .AsNoTracking()
                .OrderBy(c => c.Id) //.ToPaginatedAsync(1, page.Value);
                .ToPaginatedRestAsync(page.Value, itens.Value);
