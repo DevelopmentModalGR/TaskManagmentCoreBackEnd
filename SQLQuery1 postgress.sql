@@ -152,19 +152,14 @@ VALUES ( 'Pegar o Pipa e se ralar', 1, '0001-01-01T00:00:00','0001-01-01T00:00:0
 
 
 INSERT INTO "Users"("Name", "Email", "SignUpDate", "IsActive", "IsAdmin", "Password","Role", "CompanyId")
-VALUES ('Renato Santos', 'renato@123.com','2021-02-28T01:21:11', 1,1, '123456', 'manager',4)
-INSERT INTO "Users"("Name", "Email", "SignUpDate", "IsActive", "IsAdmin", "Password","Role", "CompanyId")
-VALUES ('Andre Ribeiro', 'AndrezinhoReiDelas_2002@123.com','2021-02-21T01:21:12', 1,0, '123456', 'manager',2)
-INSERT INTO "Users"("Name", "Email", "SignUpDate", "IsActive", "IsAdmin", "Password","Role", "CompanyId")
-VALUES ('Angelo Brabo', 'Angelao@123.com','2020-01-28T01:21:11', 1,0, '123456', 'manager',3)
-INSERT INTO "Users"("Name", "Email", "SignUpDate", "IsActive", "IsAdmin", "Password","Role", "CompanyId")
-VALUES ('manager', 'oBrabo@123.com','2021-01-12T12:12:11', 1,1, '123456', 'admin',1)
+VALUES('Renato Santos', 'renato@123.com','2021-02-28T01:21:11', true,true, '123456', 'manager',4), 
+('Andre Ribeiro', 'AndrezinhoReiDelas_2002@123.com','2021-02-21T01:21:12', true,false, '123456', 'manager',2),
+('Angelo Brabo', 'Angelao@123.com','2020-01-28T01:21:11', true,false, '123456', 'manager',3),
+('manager', 'oBrabo@123.com','2021-01-12T12:12:11', true,true, '123456', 'admin',1);
 
 INSERT INTO "DepartmentUser"("DepartmentsId", "UsersId")
-Values(1,1)
+Values(1,1),(4,1),(2,1),(3,1),(6,1);
 
-INSERT INTO "DepartmentUser"("DepartmentsId", "UsersId")
-Values(4,1),(2,1),(3,1),(6,1);
 
 INSERT INTO "JobsUser"("JobsId", "UsersId")
 Values(1,1),(32,1),(31,1),(24,1),(33,1),(12,1),(15,1),(22,1);
