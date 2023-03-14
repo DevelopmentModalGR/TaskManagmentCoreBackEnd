@@ -69,7 +69,7 @@ namespace TaskManagmentCore.Api
             //services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("Database"));
             services.AddControllersWithViews();
             services.AddDbContext<DataContext>(opt => opt.UseNpgsql(ConnectionHelper.GetConnectionString(Configuration)));
-            //services.AddDbContext<DataContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("PostgressDefaultConnectionDEV")));
+            //services.AddDbContext<DataContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             
             services.AddSwaggerGen(c =>
             {

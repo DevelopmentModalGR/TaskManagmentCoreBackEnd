@@ -6,7 +6,7 @@ public static class ConnectionHelper
     {
         public static string GetConnectionString(IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("PostgressDefaultConnectionDEV");
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
             var databaseUrl = System.Environment.GetEnvironmentVariable("DATABASE_URL");
             return string.IsNullOrEmpty(databaseUrl) ? connectionString : BuildConnectionString(databaseUrl);
         }
