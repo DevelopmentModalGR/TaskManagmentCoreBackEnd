@@ -143,7 +143,7 @@ namespace TaskManagementAspCore.Controllers
             {
                 //Força o usuário a ser sempre "funcionário"
                 //model.Role = "employee";
-                model.SignUpDate = DateTime.Now;
+                model.SignUpDate = DateTime.UtcNow;
                 context.Users.Add(model);                
                 model.Departments = null;
                 model.Jobs = null;
@@ -154,9 +154,9 @@ namespace TaskManagementAspCore.Controllers
                 return model;
             }
 
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest(new { message = "Não foi possível criar o usuário" });
+                return BadRequest(new { message = "Não foi possível criar o usuário", expection = ex });
             }
         }
 
