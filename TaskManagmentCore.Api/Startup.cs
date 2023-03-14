@@ -18,6 +18,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskManagementAspCore;
 using TaskManagementCore.Api;
+using Microsoft.AspNetCore.Http;
 
 namespace TaskManagmentCore.Api
 {
@@ -42,7 +43,7 @@ namespace TaskManagmentCore.Api
 
 
             var key = Encoding.ASCII.GetBytes(Settings.Secret);
-            //ADICIONANDO REGRA DE AUTENTICAÇÃO
+            //ADICIONANDO REGRA DE AUTENTICAï¿½ï¿½O
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -67,7 +68,7 @@ namespace TaskManagmentCore.Api
 
             //services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("Database"));
             services.AddControllersWithViews();
-            services.AddDbContext<DataContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("TaskManagmentString")));
+            services.AddDbContext<DataContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("PostgressDefaultConnection")));
             
             
             services.AddSwaggerGen(c =>
@@ -124,7 +125,14 @@ namespace TaskManagmentCore.Api
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
+
+                endpoints.MapGet("/", async context =>
+                {
+                    await context.Response.WriteAsync("Hello World!");
+                });
             });
+
+            
 
             app.UseHttpsRedirection();
         }
